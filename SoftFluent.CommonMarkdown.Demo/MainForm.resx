@@ -120,4 +120,34 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="textBoxMarkdown.Text" xml:space="preserve">
+    <value># Hello there
+
+This is a paragraph with some _emphasis text_ and some **bold text**.
+
+- one
+- two
+- three
+- four
+
+This is an [hyperlink](http://sample.com). 
+Another hyperlink using the short syntax \&lt;url&gt; &lt;http://sample.com&gt;
+
+1. pirate
+2. ninja
+3. zombie
+
+Here are some code
+
+    public void Test()
+    {
+    }
+
+Code using fence
+```
+public void Test()
+{
+}
+```</value>
+  </data>
 </root>

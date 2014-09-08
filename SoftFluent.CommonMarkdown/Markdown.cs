@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using CodeFluent.Runtime.Utilities;
 
@@ -16,18 +18,21 @@ namespace SoftFluent.CommonMarkdown
         private static readonly string _stdm = LoadStmdJs();
         private static string LoadStmdJs()
         {
+            StringBuilder sb = new StringBuilder();
+
             // this is not provided by IE's javascript
             const string polyfill = @"
                 if (typeof console === 'undefined' || typeof console.log === 'undefined') {
                     console = { };
-                    console.log = function() { };
+                    console.log = function(message) { };
                 }
 
                 if (String.prototype.trim === undefined) {
-                  String.prototype.trim = function () {
-                    return this.replace(/^\s+|\s+$/g, '');
-                  };
-                }";
+                    String.prototype.trim = function () {
+                        return this.replace(/^\s+|\s+$/g, '');
+                    };
+                }
+            ";
 
             // add a helper method
             const string method = @"
@@ -36,14 +41,29 @@ namespace SoftFluent.CommonMarkdown
                     var writer = new stmd.HtmlRenderer();
                     var parsed = reader.parse(text);
                     return writer.render(parsed);
-                    };";
+                };";
+
+            sb.Append(polyfill);
 
             // load stmd.js from resources
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetName().Name + ".stmd.js"; // https://github.com/jgm/stmd/tree/master/js
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            var stmdResourceName = assembly.GetName().Name + ".stmd.js";
+            var stringSplitResourceName = assembly.GetName().Name + ".String.split.js";
+
+            using (Stream stream = assembly.GetManifestResourceStream(stringSplitResourceName))
             using (StreamReader reader = new StreamReader(stream))
-                return polyfill + reader.ReadToEnd() + method;
+            {
+                sb.Append(reader.ReadToEnd());
+            }
+
+            using (Stream stream = assembly.GetManifestResourceStream(stmdResourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                sb.Append(reader.ReadToEnd());
+            }
+
+            sb.Append(method);
+            return sb.ToString();
         }
 
         private static readonly string _language = DetermineBestEngine();
