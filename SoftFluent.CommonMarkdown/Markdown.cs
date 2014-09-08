@@ -10,10 +10,10 @@ namespace SoftFluent.CommonMarkdown
 {
     public static class Markdown
     {
-        // http://standardmarkdown.com/
-        // https://github.com/jgm/stmd
+        // http://commonmark.org/
         // http://blog.codinghorror.com/standard-flavored-markdown/
         // http://blog.codinghorror.com/standard-markdown-is-now-common-markdown/
+        // https://github.com/jgm/stmd
 
         private static readonly string _stdm = LoadStmdJs();
         private static string LoadStmdJs()

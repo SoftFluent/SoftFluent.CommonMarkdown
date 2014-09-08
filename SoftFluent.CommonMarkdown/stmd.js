@@ -319,7 +319,7 @@
                         // into an Emph whose contents are the succeeding inlines
                         inlines[delimpos].t = 'Emph';
                         inlines[delimpos].c = inlines.slice(delimpos + 1);
-                        inlines.splice(delimpos + 1, inlines.length);
+                        inlines.splice(delimpos + 1, inlines.length - delimpos - 1);
                         break;
                     } else {
                         if (this.parseInline(inlines) === 0) {
@@ -336,7 +336,7 @@
                         this.pos += 2;
                         inlines[delimpos].t = 'Strong';
                         inlines[delimpos].c = inlines.slice(delimpos + 1);
-                        inlines.splice(delimpos + 1, inlines.length);
+                        inlines.splice(delimpos + 1, inlines.length - delimpos - 1);
                         break;
                     } else {
                         if (this.parseInline(inlines) === 0) {
@@ -876,7 +876,7 @@
         if ((match = rest.match(/^[*+-]( +|$)/))) {
             spaces_after_marker = match[1].length;
             data.type = 'Bullet';
-            data.bullet_char = match[0].charAt(0); // TODO check
+            data.bullet_char = match[0].charAt(0);
 
         } else if ((match = rest.match(/^(\d+)([.)])( +|$)/))) {
             spaces_after_marker = match[3].length;
@@ -938,6 +938,7 @@
                 break;
             }
             container = last_child;
+
             match = matchAt(/[^ ]/, ln, offset);
             if (match === null) {
                 first_nonspace = ln.length;
@@ -1362,8 +1363,7 @@
         this.doc = makeBlock('Document', 1, 1);
         this.tip = this.doc;
         this.refmap = {};
-        //var lines = input.replace(/\n$/, '').split(/\r\n|\n|\r/);
-        var lines = input.replace(/\n$/, '').split('\r\n');
+        var lines = input.replace(/\n$/, '').split(/\r\n|\n|\r/);
         var len = lines.length;
         for (var i = 0; i < len; i++) {
             this.incorporateLine(lines[i], i + 1);
@@ -1502,7 +1502,7 @@
                         inTags('code', [], this.escape(block.string_content)));
             case 'FencedCode':
                 info_words = block.info.split(/ +/);
-                attr = info_words.length === 0 || info_words[0].length === 0 ? // TODO check
+                attr = info_words.length === 0 || info_words[0].length === 0 ?
                              [] : [['class', 'language-' +
                                              this.escape(info_words[0], true)]];
                 return inTags('pre', [],
