@@ -38,6 +38,7 @@ Please note that the following list of utilities is not exhaustive and we encour
  * SingleInstance: a utility class to ensure only one instance of a WPF or Winforms application is running.
  * Template: a full blown Javascript template engine. Supports RTF files.
  * UITypeEditors & TypeConverters: numerous UITypeEditors and TypeConverters to edit specific types in property grids (EnumEditor with flag support, CultureComboBox, OpenWithEditor, etc.).
+ * UniversalConverter: a pretty generic WPF IValueConverter that focuses on declarative XAML. Alleviates the need to write custom .NET code for WPF converters.
  * WizardForm: a Form class to create visual wizard using Windows Forms. Also ships with associated pre-built pages (progress, configuration, report, summary, etc.).
  * XmlLineInfoDocument: an XmlDocument that stores line information for elements.
  * XmlUtilities: provides a set of XML utilities, e.g. get/set attributes using default values.
@@ -51,5 +52,5 @@ For more information you can:
  - Contact us via our forums (http://forums.softfluent.com).
 
  
-Copyright (C) 2005-2014 SoftFluent S.A.S.
+Copyright (C) 2005-2015 SoftFluent S.A.S.
 All rights reserved.
